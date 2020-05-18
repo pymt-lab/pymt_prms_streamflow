@@ -1,0 +1,22 @@
+build:
+  define_macros: []
+  extra_compile_args: []
+  include_dirs: []
+  libraries: []
+  library_dirs: []
+  undef_macros: []
+info:
+  github_username: csdms
+  plugin_author: Community Surface Dynamics Modeling System
+  plugin_license: MIT
+  summary: PyMT plugin for the PRMS6 Streamflow component
+library:
+  entry_point:
+  - PRMSStreamflow=bmiprmsstreamflow:bmi_prms_streamflow
+  language: fortran
+  register: ''
+plugin:
+  name: prms_streamflow
+  requirements:
+  - bmi-fortran=2.0
+  - prms

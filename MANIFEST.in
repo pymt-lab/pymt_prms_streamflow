@@ -1,0 +1,2 @@
+include versioneer.py
+include pymt_prms_streamflow/_version.py
