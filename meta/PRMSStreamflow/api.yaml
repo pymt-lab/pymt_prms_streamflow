@@ -1,0 +1,4 @@
+name: prms_streamflow
+language: fortran
+package: prms_streamflow
+class: PRMSStreamflow

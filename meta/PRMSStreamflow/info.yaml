@@ -1,0 +1,13 @@
+summary: |
+  The U.S. Geological Survey (USGS) Precipitation-Runoff Modeling
+  System (PRMS) is a deterministic, distributed-parameter, physical
+  process based modeling system developed to evaluate the response of
+  various combinations of climate and land use on streamflow and
+  general watershed hydrology. This version of PRMS has been
+  refactored from PRMS v6.0 to use only the streamflow component, and it is
+  equipped with a Basic Model Interface developed by Rich McDonald (USGS).
+url: https://github.com/nhm-usgs/bmi-prms6-streamflow
+author: Rich McDonald, Steve Markstrom, Parker Norton
+email: rmcd@usgs.gov
+version: 0.1
+license: MIT
