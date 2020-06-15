@@ -8,14 +8,10 @@ pymt_prms_streamflow
         :alt: Basic Model Interface
 
 .. image:: https://img.shields.io/badge/recipe-pymt_prms_streamflow-green.svg
-        :target: https://anaconda.org/conda-forge/pymt_prms_streamflow
+        :target: https://anaconda.org/csdms-stack/pymt_prms_streamflow
 
-.. image:: https://img.shields.io/travis/csdms/pymt_prms_streamflow.svg
-        :target: https://travis-ci.org/csdms/pymt_prms_streamflow
-
-.. image:: https://readthedocs.org/projects/pymt_prms-streamflow/badge/?version=latest
-        :target: https://pymt_prms-streamflow.readthedocs.io/en/latest/?badge=latest
-        :alt: Documentation Status
+.. image:: https://img.shields.io/travis/pymt-lab/pymt_prms_streamflow.svg
+        :target: https://travis-ci.org/pymt-lab/pymt_prms_streamflow
 
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
         :target: https://github.com/csdms/pymt
@@ -26,7 +22,7 @@ PyMT plugin for the PRMS6 Streamflow component
 
 
 * Free software: MIT license
-* Documentation: https://prms-streamflow.readthedocs.io.
+* Documentation: https://www.usgs.gov/software/precipitation-runoff-modeling-system-prms
 
 
 
@@ -53,8 +49,8 @@ into which to install it. This can be done with,
 
 .. code::
 
-  conda create -n pymt python=3.6
-  conda activate pymt
+  conda create -n pymt python=3
+  source activate pymt
 
 Once the `conda-forge` channel has been enabled, `pymt` can be installed with:
 
@@ -73,11 +69,17 @@ Installing pymt_prms_streamflow
 -------------------------------
 
 Once `pymt` is installed, the dependencies of `pymt_prms_streamflow` can
-be installed with:
+be installed. Start by appending `csdms-stack` to your channels with:
 
 .. code::
 
-  conda install bmi-fortran=2.0 prms
+  conda config --append channels csdms-stack
+
+then install the dependencies with:
+
+.. code::
+
+  conda install bmi-fortran=2.0 prms prms_streamflow
 
 To install `pymt_prms_streamflow`,
 

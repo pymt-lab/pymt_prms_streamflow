@@ -20,3 +20,4 @@ plugin:
   requirements:
   - bmi-fortran=2.0
   - prms
+  - prms_streamflow
