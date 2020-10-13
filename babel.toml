@@ -1,0 +1,26 @@
+[library]
+[library.PRMSStreamflow]
+language = "fortran"
+library = "bmiprmsstreamflow"
+header = ""
+entry_point = "bmi_prms_streamflow"
+
+[build]
+undef_macros = []
+define_macros = []
+libraries = []
+library_dirs = []
+include_dirs = []
+extra_compile_args = []
+
+[package]
+name = "pymt_prms_streamflow"
+requirements = ["prms", "prms_streamflow"]
+
+[info]
+github_username = "pymt-lab"
+package_author = "Community Surface Dynamics Modeling System"
+package_author_email = "csdms@colorado.edu"
+package_license = "MIT"
+summary = "PyMT plugin for the PRMS6 Streamflow component"
+

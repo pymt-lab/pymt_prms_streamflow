@@ -21,13 +21,13 @@ requirements:
     - cython
     - numpy 1.11.*
     - model_metadata
-    - bmi-fortran=2.0 
     - prms 
+    - prms_streamflow 
   run:
     - python
     - {{ pin_compatible('numpy') }}
-    - bmi-fortran=2.0 
     - prms 
+    - prms_streamflow 
 
 test:
   requires:
@@ -41,7 +41,7 @@ test:
 
 about:
   summary: Python package that wraps the prms_streamflow BMI.
-  home: https://github.com/csdms/pymt_prms_streamflow
-  license: MIT license
+  home: https://github.com/pymt-lab/pymt_prms_streamflow
+  license: MIT License
   license_file: LICENSE
-  dev_url: https://github.com/csdms/pymt_prms_streamflow
+  dev_url: https://github.com/pymt-lab/pymt_prms_streamflow

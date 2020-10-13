@@ -1,11 +1,11 @@
 #! /usr/bin/env python
+import pkg_resources
 
-from .bmi import (PRMSStreamflow,
-)
+__version__ = pkg_resources.get_distribution("pymt_prms_streamflow").version
 
-__all__ = ["PRMSStreamflow",
+
+from .bmi import PRMSStreamflow
+
+__all__ = [
+    "PRMSStreamflow",
 ]
-
-from ._version import get_versions
-__version__ = get_versions()['version']
-del get_versions

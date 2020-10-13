@@ -18,7 +18,6 @@ DTYPE_F_TO_PY = {
     'real': DTYPE_FLOAT,
     'real*4': DTYPE_FLOAT,
     'double precision': DTYPE_DOUBLE,
-    'double': DTYPE_DOUBLE,
     'real*8': DTYPE_DOUBLE,
     'integer': DTYPE_INT,
 }
@@ -123,13 +122,14 @@ cpdef to_string(bytes):
     except AttributeError:
         return bytes
 
-
 # start: prmsstreamflow.pyx
 
 cdef class PRMSStreamflow:
 
     cdef int _bmi
     cdef char[2048] STR_BUFFER
+
+    METADATA = "../data/PRMSStreamflow"
 
     def __cinit__(self):
         self._bmi = bmi_new()

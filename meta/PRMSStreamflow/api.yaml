@@ -1,4 +1,4 @@
-name: prms_streamflow
+name: pymt_prms_streamflow
 language: fortran
-package: prms_streamflow
+package: pymt_prms_streamflow
 class: PRMSStreamflow

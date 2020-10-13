@@ -730,8 +730,7 @@ contains
        if (status == BMI_SUCCESS) then
           ref = c_loc(rdest(1))
        end if
-    case("double precision", "DOUBLE PRECISION", "real*8", "REAL*8", &
-         "double", "DOUBLE")
+    case("double precision", "DOUBLE PRECISION", "real*8", "REAL*8")
        status = model_array(model_index)%get_value_ptr(var_name_, ddest)
        if (status == BMI_SUCCESS) then
           ref = c_loc(ddest(1))

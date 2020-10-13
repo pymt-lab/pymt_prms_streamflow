@@ -1,38 +1,27 @@
 #! /usr/bin/env python
+import contextlib
 import os
-import sys
 import subprocess
+import sys
+
 import numpy as np
-
-import versioneer
-from setuptools import find_packages, setup
-
-from distutils.extension import Extension
-from model_metadata.utils import get_cmdclass, get_entry_points
-
-from setuptools.command.build_ext import build_ext as _build_ext
 from numpy.distutils.fcompiler import new_fcompiler
-from scripting.contexts import cd
-
+from setuptools import Extension, find_packages, setup
+from setuptools.command.build_ext import build_ext as _build_ext
 
 common_flags = {
     "include_dirs": [
         np.get_include(),
         os.path.join(sys.prefix, "include"),
     ],
-    "library_dirs": [
-    ],
-    "define_macros": [
-    ],
-    "undef_macros": [
-    ],
-    "extra_compile_args": [
-    ],
+    "library_dirs": [],
+    "define_macros": [],
+    "undef_macros": [],
+    "extra_compile_args": [],
     "language": "c",
 }
 
-libraries = [
-]
+libraries = []
 
 # Locate directories under Windows %LIBRARY_PREFIX%.
 if sys.platform.startswith("win"):
@@ -44,17 +33,24 @@ ext_modules = [
         "pymt_prms_streamflow.lib.prmsstreamflow",
         ["pymt_prms_streamflow/lib/prmsstreamflow.pyx"],
         libraries=libraries + ["bmiprmsstreamflow"],
-        extra_objects=['pymt_prms_streamflow/lib/bmi_interoperability.o'],
+        extra_objects=["pymt_prms_streamflow/lib/bmi_interoperability.o"],
         **common_flags
     ),
 ]
 
-packages = find_packages()
-pymt_components = [(
+entry_points = {
+    "pymt.plugins": [
         "PRMSStreamflow=pymt_prms_streamflow.bmi:PRMSStreamflow",
-        "meta/PRMSStreamflow",
-    ),
-]
+    ]
+}
+
+
+@contextlib.contextmanager
+def as_cwd(path):
+    prev_cwd = os.getcwd()
+    os.chdir(path)
+    yield
+    os.chdir(prev_cwd)
 
 
 def build_interoperability():
@@ -66,11 +62,11 @@ def build_interoperability():
     cmd.append(compiler.compile_switch)
     if sys.platform.startswith("win") is False:
         cmd.append("-fPIC")
-    for include_dir in common_flags['include_dirs']:
+    for include_dir in common_flags["include_dirs"]:
         if os.path.isabs(include_dir) is False:
             include_dir = os.path.join(sys.prefix, "include", include_dir)
-        cmd.append('-I{}'.format(include_dir))
-    cmd.append('bmi_interoperability.f90')
+        cmd.append("-I{}".format(include_dir))
+    cmd.append("bmi_interoperability.f90")
 
     try:
         subprocess.check_call(cmd)
@@ -79,24 +75,45 @@ def build_interoperability():
 
 
 class build_ext(_build_ext):
-
     def run(self):
-        with cd('pymt_prms_streamflow/lib'):
+        with as_cwd("pymt_prms_streamflow/lib"):
             build_interoperability()
         _build_ext.run(self)
 
 
-cmdclass = get_cmdclass(pymt_components, cmdclass=versioneer.get_cmdclass())
-cmdclass["build_ext"] = build_ext
+def read(filename):
+    with open(filename, "r", encoding="utf-8") as fp:
+        return fp.read()
+
+
+long_description = u"\n\n".join(
+    [read("README.rst"), read("CREDITS.rst"), read("CHANGES.rst")]
+)
+
 
 setup(
     name="pymt_prms_streamflow",
     author="Community Surface Dynamics Modeling System",
-    description="PyMT plugin for prms_streamflow",
-    version=versioneer.get_version(),
+    author_email="csdms@colorado.edu",
+    description="PyMT plugin for pymt_prms_streamflow",
+    long_description=long_description,
+    version="0.2",
+    url="https://github.com/pymt-lab/pymt_prms_streamflow",
+    classifiers=[
+        "Development Status :: 4 - Beta",
+        "Intended Audience :: Science/Research",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: MacOS :: MacOS X",
+        "Operating System :: POSIX :: Linux",
+        "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: 3.8",
+    ],
+    keywords=["bmi", "pymt"],
+    install_requires=open("requirements.txt", "r").read().splitlines(),
     setup_requires=["cython"],
     ext_modules=ext_modules,
-    packages=packages,
-    cmdclass=cmdclass,
-    entry_points=get_entry_points(pymt_components),
+    cmdclass=dict(build_ext=build_ext),
+    packages=find_packages(),
+    entry_points=entry_points,
+    include_package_data=True,
 )
